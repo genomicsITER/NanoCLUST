@@ -74,7 +74,7 @@ if (!(workflow.runName ==~ /[a-z]+_[a-z]+/)) {
 }
 // Stage config files
 ch_multiqc_config = file(params.multiqc_config, checkIfExists: true)
-ch_output_docs = file("$baseDir/docs/output.md", checkIfExists: true)
+ch_output_docs = file("$baseDir/docs/3pipeline_output.md", checkIfExists: true)
 
 // Header log info
 //log.info nfcoreHeader()
