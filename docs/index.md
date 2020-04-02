@@ -10,7 +10,7 @@ The pipeline is built using [Nextflow](https://www.nextflow.io), a workflow tool
 
 i. Install [`nextflow`](https://nf-co.re/usage/installation)
 
-ii. Install one of [`docker`](https://docs.docker.com/engine/installation/), [`singularity`](https://www.sylabs.io/guides/3.0/user-guide/) or [`conda`](https://conda.io/miniconda.html)
+ii. Install [`docker`](https://docs.docker.com/engine/installation/) or [`conda`](https://conda.io/miniconda.html)
 
 iii. Clone the NanoCLUST repository and test the pipeline on a minimal dataset with a single command
 
@@ -23,7 +23,7 @@ wget https://ftp.ncbi.nlm.nih.gov/blast/db/taxdb.tar.gz && tar -xzvf taxdb.tar.g
 ```
 
 ```bash
-nextflow run main.nf -profile test,<docker/singularity/conda>
+nextflow run main.nf -profile test,<dockerconda>
 ```
 
 iv. Start running your own analysis!
@@ -31,7 +31,7 @@ iv. Start running your own analysis!
 Run a single sample analysis using default parameters:
 
 ```bash
-nextflow run nf-core/nanoclust -profile <conda,docker> --reads 'sample.fastq' --db "path/to/nanoclust/db/16S_ribosomal_RNA" --tax "path/to/nanoclust/db/taxdb/"
+nextflow run main.nf -profile <conda,docker> --reads 'sample.fastq' --db "path/to/nanoclust/db/16S_ribosomal_RNA" --tax "path/to/nanoclust/db/taxdb/"
 ```
 
 See usage and output sections for all of the available options when running the pipeline.
