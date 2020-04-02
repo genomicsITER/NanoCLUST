@@ -1,4 +1,4 @@
-![nf-core/nanoclust](images/nf-core-nanoclust_logo.png)
+# NanoCLUST
 
 **De novo clustering and consensus building for ONT 16S sequencing data**.
 
