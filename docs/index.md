@@ -31,10 +31,10 @@ iv. Start running your own analysis!
 Run a single sample analysis using default parameters:
 
 ```bash
-nextflow run nf-core/nanoclust -profile conda --reads 'sample.fastq' --db "path/to/nanoclust/db/16S_ribosomal_RNA" --tax "path/to/nanoclust/db/taxdb/"
+nextflow run nf-core/nanoclust -profile <conda,docker> --reads 'sample.fastq' --db "path/to/nanoclust/db/16S_ribosomal_RNA" --tax "path/to/nanoclust/db/taxdb/"
 ```
 
-See usage and output sections in the documentation (/docs) for all of the available options when running the pipeline.
+See usage and output sections for all of the available options when running the pipeline.
 
 
 ## Credits

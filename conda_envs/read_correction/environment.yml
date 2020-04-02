@@ -1,0 +1,9 @@
+name: read_correction-
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+  - intel
+dependencies:
+  - bioconda:canu
+

@@ -1,0 +1,8 @@
+name: fastqc_multiqc
+channels:
+  - conda-forge
+  - bioconda
+dependencies:
+  - bioconda::fastqc
+  - bioconda::multiqc
+

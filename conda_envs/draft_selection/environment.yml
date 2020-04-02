@@ -1,0 +1,9 @@
+name: draft_selection
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+  - anaconda
+dependencies:
+  - bioconda::fastani
+  - anaconda::gawk

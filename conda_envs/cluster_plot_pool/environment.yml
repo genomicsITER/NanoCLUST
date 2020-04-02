@@ -1,0 +1,9 @@
+name: cluster_plot_pool
+channels:
+  - conda-forge
+  - anaconda
+dependencies:
+  - conda-forge::numpy
+  - conda-forge::pandas
+  - conda-forge::matplotlib
+  - anaconda::requests

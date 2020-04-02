@@ -1,0 +1,5 @@
+name: demultiplex_porechop
+channels:
+  - bioconda
+dependencies:
+  - bioconda::porechop

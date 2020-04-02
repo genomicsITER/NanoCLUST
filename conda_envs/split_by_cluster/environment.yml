@@ -1,0 +1,8 @@
+name: split_by_cluster
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+  - intel
+dependencies:
+  - bioconda:seqtk

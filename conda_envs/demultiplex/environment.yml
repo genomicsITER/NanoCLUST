@@ -1,0 +1,7 @@
+name: demultiplex
+channels:
+  - bioconda
+  - anaconda
+dependencies:
+  - bioconda::qcat
+  - anaconda::future 

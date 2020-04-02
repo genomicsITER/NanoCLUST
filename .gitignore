@@ -1,8 +1,7 @@
 .nextflow*
 work/
 data/
-results/
+results*/
 .DS_Store
-tests/
-testing/
+tests/test_data
 *.pyc

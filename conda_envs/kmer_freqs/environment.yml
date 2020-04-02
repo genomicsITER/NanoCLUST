@@ -1,0 +1,10 @@
+name: kmer_freq
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+  - anaconda
+dependencies:
+  - conda-forge::biopython
+  - conda-forge::tqdm
+  - anaconda::pandas

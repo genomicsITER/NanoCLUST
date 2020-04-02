@@ -1,0 +1,7 @@
+name: consensus_classification
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+  - bioconda::blast
