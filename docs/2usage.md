@@ -91,6 +91,12 @@ Same as above but uses porechop software for demultiplexing.
 --reads 'pooled_sample.fastq' --demultiplex[_porechop]
 ```
 
+#### `--kit` (RAB204)
+(Only with --demultiplex). Barcoding kit
+
+Kits supported:
+{Auto,PBC096,RBK004,NBD104/NBD114,PBK004/LWB001,RBK001,RAB204,VMK001,PBC001,NBD114,NBD103/NBD104,DUAL,RPB004/RLB001}
+
 ## UMAP and HDBSCAN configuration parameters
 
 #### `--umap_set_size` (default 100000)

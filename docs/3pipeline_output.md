@@ -51,7 +51,7 @@ Draft sequence extracted from the cluster
 Blast classification output 
 
 ### Additional plots
-NanoCLUST generate the UMAP projection plot and stacked barplots for single and pooled samples at different taxonomic levels. The plot module uses the taxid included in the classification table and [Unipept Taxonomy API](http://api.unipept.ugent.be)
+NanoCLUST generates the UMAP projection plot and stacked barplots for single and pooled samples at different taxonomic levels. The plot module uses the taxid included in the classification table and [Unipept Taxonomy API](http://api.unipept.ugent.be)
 
 * `results/sample_name/hdbscan.output.png`
 UMAP projection and HDBSCAN clustering plot.

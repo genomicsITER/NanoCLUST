@@ -30,8 +30,9 @@ def helpMessage() {
       --min_cluster_size            Minimum number of reads to call a independent cluster (100)
 
     Other options:
-      --demultiplex                 Set this parameter if you file is a multiplexed sample
+      --demultiplex                 Set this parameter if you file is a pooled sample
       --demultiplex_porechop        Same as --demultiplex but uses Porechop for the task
+      --kit                         (Only with --demultiplex) Barcoding kit (RAB204) {Auto,PBC096,RBK004,NBD104/NBD114,PBK004/LWB001,RBK001,RAB204,VMK001,PBC001,NBD114,NBD103/NBD104,DUAL,RPB004/RLB001}
       --umap_set_size               Number of reads used to perform the UMAP+HDBSCAN clustering (100000)
       --cluster_sel_epsilon         Minimun distance to separate clusters. (0.5)
       --min_cluster_size            Minimum number of reads to call a independent cluster (100)
@@ -165,8 +166,9 @@ if(params.demultiplex) {
      file("barcode*.fastq") into reads mode flatten
 
      script:
+     kit = params.kit
      """
-     qcat -f $reads -k RAB204 --trim -t ${task.cpus} -b .
+     qcat -f $reads -k $kit --trim -t ${task.cpus} -b .
      """
  }
 }
