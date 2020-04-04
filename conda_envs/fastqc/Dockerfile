@@ -4,5 +4,5 @@ LABEL authors="Hector Rodriguez-Perez, Laura Ciuffreda" \
 
 COPY environment.yml /
 RUN conda env create -f environment.yml && conda clean -a
-RUN apt update && apt install -i procps
+RUN apt update && apt install -y procps
 ENV PATH /opt/conda/envs/fastqc_multiqc/bin:$PATH
