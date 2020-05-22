@@ -270,7 +270,7 @@ process multiqc {
      tuple val(barcode), file(clusters), file(qced_reads) from clustering_out
 
      output:
-     tuple val(barcode), file('*.log'), file('*.fastq') into cluster_reads mode flatten
+     tuple val(barcode), file('*[0-9]*.log'), file('*[0-9]*.fastq') into cluster_reads mode flatten
 
      script:
      """
