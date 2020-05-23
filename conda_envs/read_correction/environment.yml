@@ -5,5 +5,5 @@ channels:
   - defaults
   - intel
 dependencies:
-  - bioconda:canu
+  - bioconda:canu=2.0
 

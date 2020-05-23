@@ -5,4 +5,4 @@ channels:
   - defaults
   - intel
 dependencies:
-  - bioconda:seqtk
+  - bioconda:seqtk=1.3

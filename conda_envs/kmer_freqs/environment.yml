@@ -5,6 +5,6 @@ channels:
   - defaults
   - anaconda
 dependencies:
-  - conda-forge::biopython
-  - conda-forge::tqdm
-  - anaconda::pandas
+  - conda-forge::biopython=1.76
+  - conda-forge::tqdm=4.46.0
+  - anaconda::pandas=1.0.3

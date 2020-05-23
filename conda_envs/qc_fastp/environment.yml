@@ -2,4 +2,4 @@ name: fastp
 channels:
   - bioconda
 dependencies:
-  - bioconda::fastp
+  - bioconda::fastp=0.20.1

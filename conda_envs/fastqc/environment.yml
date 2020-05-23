@@ -3,6 +3,6 @@ channels:
   - conda-forge
   - bioconda
 dependencies:
-  - bioconda::fastqc
-  - bioconda::multiqc
+  - bioconda::fastqc=0.11.9
+  - bioconda::multiqc=1.8
 

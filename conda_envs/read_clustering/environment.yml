@@ -1,17 +1,20 @@
 name: read_clustering
-channels:
-  - conda-forge
-dependencies:
 
+channels:
+
+ - conda-forge
+
+dependencies:
+  - pip=20.0.2
   - pip:
-    - numpy
-    - pandas
-    - matplotlib
-    - datashader
-    - holoviews
-    - bokeh
-    - scikit-learn
-    - hdbscan
+    - numpy==1.18.4
+    - pandas==1.0.3
+    - matplotlib==3.2.1
+    - datashader==0.10.0
+    - holoviews==1.13.2
+    - bokeh==2.0.2
+    - scikit-learn==0.23.1
+    - hdbscan==0.8.26
     - umap-learn==0.4.0rc2
     
 

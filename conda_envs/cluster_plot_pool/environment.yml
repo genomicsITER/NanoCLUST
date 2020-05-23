@@ -3,7 +3,7 @@ channels:
   - conda-forge
   - anaconda
 dependencies:
-  - conda-forge::numpy
-  - conda-forge::pandas
-  - conda-forge::matplotlib
-  - anaconda::requests
+  - conda-forge::numpy=1.18.4
+  - conda-forge::pandas=1.0.3
+  - conda-forge::matplotlib=3.2.1
+  - anaconda::requests=2.23.0
