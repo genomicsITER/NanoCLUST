@@ -31,7 +31,7 @@ iv. Start running your own analysis!
 Run a single sample analysis using default parameters:
 
 ```bash
-nextflow run main.nf -profile <conda,docker> --reads 'sample.fastq' --db "path/to/nanoclust/db/16S_ribosomal_RNA" --tax "path/to/nanoclust/db/taxdb/"
+nextflow run main.nf -profile <conda,docker> --reads 'sample.fastq' --db "fullpath/to/nanoclust/db/16S_ribosomal_RNA" --tax "fullpath/to/nanoclust/db/taxdb/"
 ```
 
 See usage and output sections for all of the available options when running the pipeline.

@@ -17,8 +17,11 @@ The typical command for running the pipeline is as follows:
 ```bash
 nextflow run main.nf --reads 'data/mock_sample.fastq' --db 'path/to/blastdb' --tax 'path/to/taxdb' -profile <conda,docker>
 ```
+This will launch the pipeline with the `conda` or `docker` configuration profiles. See below for more information about profiles.
 
-This will launch the pipeline with the `conda` configuration profile. See below for more information about profiles.
+*Database and taxdb should be specified using full path (/home/user/NanoCLUST/db/[...])
+
+*--min_cluster_size and --polishing reads have default values to 50 and 100 respectively. We recommend to manually assign these when working with your own data to see how the pipeline output may change specially at low taxonomic levels such as species.
 
 Note that the pipeline will create the following files in your working directory:
 
