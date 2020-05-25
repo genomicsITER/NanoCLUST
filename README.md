@@ -14,7 +14,7 @@ ii. Install [`docker`](https://docs.docker.com/engine/installation/) or [`conda`
 
 iii. Clone the NanoCLUST repository and test the pipeline on a minimal dataset with a single command
 
-*Download a BLAST database for cluster sequence classification. For NCBI 16S rRNA database:
+*Download a BLAST database in the NanoCLUST dir for cluster sequence classification. For NCBI 16S rRNA database:
 
 ```bash
 mkdir db db/taxdb
@@ -31,7 +31,7 @@ iv. Start running your own analysis!
 Run a single sample analysis using default parameters:
 
 ```bash
-nextflow run nf-core/nanoclust -profile conda --reads 'sample.fastq' --db "path/to/nanoclust/db/16S_ribosomal_RNA" --tax "path/to/nanoclust/db/taxdb/"
+nextflow run nf-core/nanoclust -profile conda --reads 'sample.fastq' --db "db/16S_ribosomal_RNA" --tax "db/taxdb/"
 ```
 
 See usage and output sections in the documentation (/docs) for all of the available options when running the pipeline.

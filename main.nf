@@ -377,8 +377,8 @@ process multiqc {
      tuple val(barcode), file('*_blast.log') into classifications_ch
 
      script:
-     db=params.db
-     taxdb=params.tax
+     db="$baseDir/" + params.db
+     taxdb="$baseDir/" + params.tax
 
      if(!params.db)
         """

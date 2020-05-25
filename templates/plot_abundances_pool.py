@@ -11,6 +11,7 @@ def plot_multi(table):
     bars = [df_final_grp.iloc[i,1:].values.tolist() for i in range(0,df_final_grp.shape[0])]
     barWidth = 0.25
     colors = ['#a6cee3','#3caea3','#1f78b4','#b2df8a','#33a02c','#fb9a99','#e31a1c','#d11141','#ffc425','#ff7f00','#cab2d6','#6a3d9a','#ffff99','#b15928']
+    color_index = 0
     r = np.arange(0, (len(df_final_grp.columns) -1))
 
     graph_bars = []
@@ -18,7 +19,8 @@ def plot_multi(table):
     bottomm = bars[0]
 
     for index in range(1,len(bars)):
-            graph_bars.append(plt.bar(r, bars[index], bottom=bottomm, color=colors[index], edgecolor='white', width=barWidth, label=df_final_grp.iloc[index,0]))
+            color_index = index if(index < len(colors)) else index%len(colors)
+            graph_bars.append(plt.bar(r, bars[index], bottom=bottomm, color=colors[color_index], edgecolor='white', width=barWidth, label=df_final_grp.iloc[index,0]))
             bottomm = [i+j for i,j in zip(bottomm, bars[index])]
 
     plt.xticks(r, (df_final_grp.columns[1:]))
