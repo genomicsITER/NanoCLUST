@@ -377,8 +377,14 @@ process multiqc {
      tuple val(barcode), file('*_blast.log') into classifications_ch
 
      script:
-     db="/tmp/" + params.db
-     taxdb="/tmp/" + params.tax
+     if(workflow.profile == 'conda' || workflow.profile == 'test,conda'){
+         blast_dir = "$baseDir/"
+     }
+     else {
+         blast_dir = "/tmp/"
+     }
+     db=blast_dir + params.db
+     taxdb=blast_dir + params.tax
 
      if(!params.db)
         """
