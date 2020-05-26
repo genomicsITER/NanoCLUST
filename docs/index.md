@@ -46,5 +46,3 @@ This work was supported by Instituto de Salud Carlos III [PI14/00844, PI17/00610
 ## Contributions and Support
 
 If you would like to contribute to this pipeline, please see the contributing guidelines
-
-For further information or help, don't hesitate to get in touch on [Slack](https://nfcore.slack.com/channels/nf-core/nanoclust) (you can join with [this invite](https://nf-co.re/join/slack)).
