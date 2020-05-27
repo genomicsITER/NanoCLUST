@@ -220,24 +220,30 @@ process fastqc {
     fastqc -q $reads
     """
 }
+if(params.multiqc){
+    process multiqc {
+        publishDir "${params.outdir}/MultiQC", mode: 'copy'
 
-process multiqc {
-    publishDir "${params.outdir}/MultiQC", mode: 'copy'
+        input:
+        file ('fastqc/*') from fastqc_results.collect().ifEmpty([])
+        
+        output:
+        file "*multiqc_report.html"
+        file "*_data"
 
-    input:
-    file ('fastqc/*') from fastqc_results.collect().ifEmpty([])
-    
-    output:
-    file "*multiqc_report.html"
-    file "*_data"
-
-    script:
-    """
-    multiqc . 
-    """
+        script:
+        """
+        multiqc . 
+        """
+    }
 }
 
  process kmer_freqs {
+     memory { 8.GB * task.attempt }
+     time { 1.hour * task.attempt }
+     errorStrategy { task.exitStatus in 137..140 ? 'retry' : 'terminate' }
+     maxRetries 3
+
      input:
      tuple val(barcode), file(qced_reads) from qc_results
 
@@ -251,6 +257,11 @@ process multiqc {
  }
 
  process read_clustering {
+     memory { 8.GB * task.attempt }
+     time { 1.hour * task.attempt }
+     errorStrategy { task.exitStatus in 137..140 ? 'retry' : 'terminate' }
+     maxRetries 3
+
      publishDir "${params.outdir}/${barcode}/", mode: 'copy', pattern: 'hdbscan.output.*'
 
      input:
@@ -289,6 +300,11 @@ process multiqc {
  }
 
  process read_correction {
+     memory { 8.GB * task.attempt }
+     time { 1.hour * task.attempt }
+     errorStrategy { task.exitStatus in 137..140 ? 'retry' : 'terminate' }
+     maxRetries 3
+
      input:
      tuple val(barcode), file(cluster_log), file(reads) from cluster_reads
 
@@ -334,6 +350,11 @@ process multiqc {
  }
 
  process racon_pass {
+     memory { 8.GB * task.attempt }
+     time { 1.hour * task.attempt }
+     errorStrategy { task.exitStatus in 137..140 ? 'retry' : 'terminate' }
+     maxRetries 3
+
      input:
      tuple val(barcode), val(cluster_id), file(cluster_log), file(draft_read), file(corrected_reads) from draft
 
@@ -348,6 +369,11 @@ process multiqc {
  }
 
  process medaka_pass {
+     memory { 8.GB * task.attempt }
+     time { 1.hour * task.attempt }
+     errorStrategy { task.exitStatus in 137..140 ? 'retry' : 'terminate' }
+     maxRetries 3
+     
      publishDir "${params.outdir}/${barcode}/cluster${cluster_id}", mode: 'copy', pattern: 'consensus_medaka.fasta/consensus.fasta' 
 
      input:
