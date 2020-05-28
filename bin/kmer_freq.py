@@ -21,6 +21,7 @@ def parse_args():
 
     # Optional arguments
     parser.add_argument("-k", help="k-mer size [5]", type=int, default=5)
+    parser.add_argument('-r', action='store', dest='qced_reads', help='READS')
     parser.add_argument("-t", "--threads", help="Number of threads to use [4]", type=int, default=32)
     parser.add_argument("-c", "--count", help="Provide raw k-mer raw counts, not normalized [False]", action="store_true", default=False)
     parser.add_argument("-f", "--frac", help="Provide k-mer counts normalized by total number of k-mers [False]", action="store_true", default=False)
@@ -212,8 +213,8 @@ def check_input_format(fastx):
     return ftype
 
 def main(args):
-    ftype  = check_input_format(sys.argv[0])
-    n_reads = get_n_reads(sys.argv[0], ftype)
+    ftype  = check_input_format(args.qced_reads)
+    n_reads = get_n_reads(args.qced_reads, ftype)
 
     chunk_n_reads = 5000
 
@@ -227,7 +228,7 @@ def main(args):
     for chunk in tqdm(read_chunks):
         target_range = (chunk[0], chunk[-1])
         
-        comp_vectors,lengths_d = launch_seq_kmers_pool( "$qced_reads",     \
+        comp_vectors,lengths_d = launch_seq_kmers_pool( args.qced_reads,     \
                                                         ftype,          \
                                                         args.k,         \
                                                         args.threads,   \
@@ -235,7 +236,7 @@ def main(args):
                                                         combined_kmers, \
                                                         args.count,     \
                                                         args.frac )
-        write_output( sys.argv[0], ftype, comp_vectors, lengths_d, target_range )
+        write_output( args.qced_reads, ftype, comp_vectors, lengths_d, target_range )
 
 if __name__=="__main__":
     args = parse_args()

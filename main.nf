@@ -239,7 +239,7 @@ if(params.multiqc){
 }
 
  process kmer_freqs {
-     memory { 8.GB * task.attempt }
+     memory { 7.GB * task.attempt }
      time { 1.hour * task.attempt }
      errorStrategy { task.exitStatus in 137..140 ? 'retry' : 'terminate' }
      maxRetries 3
@@ -248,16 +248,18 @@ if(params.multiqc){
      tuple val(barcode), file(qced_reads) from qc_results
 
      output:
-     stdout freqs
+     file "freqs.txt" into freqs
      tuple val(barcode), file(qced_reads) into freqs_qc_results
 
      script:   
-     template "kmer_freq.py"
+     """
+     kmer_freq.py -r $qced_reads > freqs.txt
+     """
 
  }
 
  process read_clustering {
-     memory { 8.GB * task.attempt }
+     memory { 7.GB * task.attempt }
      time { 1.hour * task.attempt }
      errorStrategy { task.exitStatus in 137..140 ? 'retry' : 'terminate' }
      maxRetries 3
@@ -300,7 +302,7 @@ if(params.multiqc){
  }
 
  process read_correction {
-     memory { 8.GB * task.attempt }
+     memory { 7.GB * task.attempt }
      time { 1.hour * task.attempt }
      errorStrategy { task.exitStatus in 137..140 ? 'retry' : 'terminate' }
      maxRetries 3
@@ -350,7 +352,7 @@ if(params.multiqc){
  }
 
  process racon_pass {
-     memory { 8.GB * task.attempt }
+     memory { 7.GB * task.attempt }
      time { 1.hour * task.attempt }
      errorStrategy { task.exitStatus in 137..140 ? 'retry' : 'terminate' }
      maxRetries 3
@@ -369,11 +371,11 @@ if(params.multiqc){
  }
 
  process medaka_pass {
-     memory { 8.GB * task.attempt }
+     memory { 7.GB * task.attempt }
      time { 1.hour * task.attempt }
      errorStrategy { task.exitStatus in 137..140 ? 'retry' : 'terminate' }
      maxRetries 3
-     
+
      publishDir "${params.outdir}/${barcode}/cluster${cluster_id}", mode: 'copy', pattern: 'consensus_medaka.fasta/consensus.fasta' 
 
      input:
