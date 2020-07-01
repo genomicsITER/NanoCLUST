@@ -12,7 +12,7 @@ i. Install [`nextflow`](https://nf-co.re/usage/installation)
 
 ii. Install [`docker`](https://docs.docker.com/engine/installation/) or [`conda`](https://conda.io/miniconda.html)
 
-iii. Clone the NanoCLUST repository and test the pipeline on a minimal dataset with a single command
+iii. Clone the NanoCLUST repository and test the pipeline on a minimal dataset with a single command and docker/conda profiles.
 
 *Download a BLAST database in the NanoCLUST dir for cluster sequence classification. For NCBI 16S rRNA database:
 
@@ -23,7 +23,8 @@ wget https://ftp.ncbi.nlm.nih.gov/blast/db/taxdb.tar.gz && tar -xzvf taxdb.tar.g
 ```
 
 ```bash
-nextflow run main.nf -profile test,<docker/conda>
+#Using docker profile with container-based dependencies (recommended).
+nextflow run main.nf -profile test,docker
 ```
 
 iv. Start running your own analysis!
@@ -31,11 +32,22 @@ iv. Start running your own analysis!
 Run a single sample analysis inside NanoCLUST dir using default parameters:
 
 ```bash
-nextflow run main.nf -profile conda --reads 'sample.fastq' --db "db/16S_ribosomal_RNA" --tax "db/taxdb/"
+nextflow run main.nf \ 
+             -profile docker \ 
+             --reads 'sample.fastq' \ 
+             --db "db/16S_ribosomal_RNA" \ 
+             --tax "db/taxdb/"
 ```
 
 See usage and output sections in the documentation (/docs) for all of the available options when running the pipeline.
 
+## Computing requirements note
+
+Clustering step uses up to 32-36GB RAM when working with a real dataset analysis and default parameters (umap_set_size = 100000). Using umap_set_size = 50000, will diminish memory consumption to 10-13GB RAM. When running the pipeline, kmer_freqs and read_clustering processes could be terminated with status 137 when not enough RAM.
+
+Using the -with-trace option, it is possible to get an execution trace file which includes computing times and memory consumption metrics for all pipeline processes.
+
+The execution of the test profile (minimum testing dataset and default parameters) can be done with a regular 4 cores and 16GB RAM machine.
 
 ## Credits
 
