@@ -43,11 +43,19 @@ See usage and output sections in the documentation (/docs) for all of the availa
 
 ## Computing requirements note
 
-Clustering step uses up to 32-36GB RAM when working with a real dataset analysis and default parameters (umap_set_size = 100000). Using umap_set_size = 50000, will diminish memory consumption to 10-13GB RAM. When running the pipeline, kmer_freqs and read_clustering processes could be terminated with status 137 when not enough RAM.
+Clustering step uses up to 32-36GB RAM when working with a real dataset analysis and default parameters (umap_set_size = 100000). Setting umap_set_size to 50000, will diminish memory consumption to 10-13GB RAM. When running the pipeline, kmer_freqs or mostly read_clustering processes could be terminated with status 137 when not enough RAM.
+
+Nextflow automatically uses all available resources in your machine. More cpu threads enable the pipeline to compute and classify the different clusters at the same time and hence reduces the overall execution time.
 
 Using the -with-trace option, it is possible to get an execution trace file which includes computing times and memory consumption metrics for all pipeline processes.
 
-The execution of the test profile (minimum testing dataset and default parameters) can be done with a regular 4 cores and 16GB RAM machine.
+*The execution of the test profile (minimum testing dataset and default parameters) can be done with a regular 4 cores and 16GB RAM machine.
+
+## Troubleshooting
+
+- Using conda profile, some issues can arise due to unknown problems with the read_clustering and kmer_freq conda environments. If it is the case, we recommend using the docker profile to ensure all dependencies run in the right environments and these are tested and available in the cloud (automatically downloaded when using docker profile).
+
+- In some machines, the read_clustering process exits with error status(_RuntimeError: cannot cache function '...'_). We have seen that this condition can be avoided running the pipeline with sudo privileges (even if Docker was previously available without sudo permissions). 
 
 ## Credits
 
