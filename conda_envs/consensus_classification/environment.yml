@@ -4,4 +4,4 @@ channels:
   - bioconda
   - defaults
 dependencies:
-  - bioconda::blast=2.9.0
+  - blast =2.10.1
