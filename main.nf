@@ -31,7 +31,6 @@ def helpMessage() {
       --min_read_length             Minimum number of base pair in sequence reads (1400)
       --max_read_length             Maximum number of base pair in sequence reads (1700)
 
-
     Other options:
       --demultiplex                 Set this parameter if you file is a pooled sample
       --demultiplex_porechop        Same as --demultiplex but uses Porechop for the task

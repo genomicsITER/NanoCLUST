@@ -138,6 +138,12 @@ Each step in the pipeline has a default set of requirements for number of CPUs, 
 
 <!-- TODO nf-core: Describe any other command line flags here -->
 
+#### `--min_read_length`
+Minimum length of reads (bp) used in analysis.
+
+#### `--max_read_length`
+Maximum length of reads (bp) used in analysis.
+
 #### `--outdir`
 The output directory where the results will be saved.
 
