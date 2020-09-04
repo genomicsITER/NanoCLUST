@@ -1,7 +1,8 @@
 name: demultiplex
 channels:
+  - conda-forge
   - bioconda
-  - anaconda
+  - defaults
 dependencies:
-  - bioconda::qcat
-  - anaconda::future 
+  - qcat
+  - future 

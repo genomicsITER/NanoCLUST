@@ -3,8 +3,7 @@ channels:
   - conda-forge
   - bioconda
   - defaults
-  - anaconda
 dependencies:
-  - conda-forge::biopython=1.76
-  - conda-forge::tqdm=4.46.0
-  - anaconda::pandas=1.0.3
+  - biopython =1.77
+  - tqdm =4.48.2
+  - pandas =1.1.1

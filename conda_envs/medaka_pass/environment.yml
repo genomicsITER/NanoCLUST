@@ -4,4 +4,4 @@ channels:
   - bioconda
   - defaults
 dependencies:
-  - bioconda::medaka=1.0.1
+  - medaka =1.0.3
