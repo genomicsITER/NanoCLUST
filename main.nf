@@ -28,6 +28,8 @@ def helpMessage() {
       --umap_set_size               Number of reads used to perform the UMAP+HDBSCAN clustering (100000)
       --cluster_sel_epsilon         Minimun distance to separate clusters. (0.5)
       --min_cluster_size            Minimum number of reads to call a independent cluster (100)
+      --min_read_length             Minimum number of base pair in sequence reads (1400)
+      --max_read_length             Maximum number of base pair in sequence reads (1700)
 
     Other options:
       --demultiplex                 Set this parameter if you file is a pooled sample
@@ -198,7 +200,7 @@ process QC {
     script:
     """
     barcode=${reads.baseName}
-    fastp -i $reads -q 8 -l 1400 --length_limit 1700 -o \$barcode\\_qced_reads.fastq
+    fastp -i $reads -q 8 -l ${params.min_read_length} --length_limit ${params.max_read_length} -o \$barcode\\_qced_reads.fastq
     #perl prinseq-lite.pl -fastq $reads -out_good qced_reads -min_len 1400 -max_len 1700 -log qc_log -min_qual_mean 8
     head -n\$(( ${params.umap_set_size}*4 )) \$barcode\\_qced_reads.fastq > \$barcode\\_qced_reads_set.fastq
     """
