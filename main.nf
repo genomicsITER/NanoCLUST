@@ -261,7 +261,6 @@ if(params.multiqc){
  }
 
  process read_clustering {
-     memory { 7.GB * task.attempt }
      time { 1.hour * task.attempt }
      errorStrategy { task.exitStatus in 137..140 ? 'retry' : 'terminate' }
      maxRetries 3
