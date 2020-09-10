@@ -8,7 +8,7 @@ The pipeline is built using [Nextflow](https://www.nextflow.io), a workflow tool
 
 ## Quick Start
 
-i. Install [`nextflow`](https://nf-co.re/usage/installation)
+i. Install [`nextflow`](https://nf-co.re/usage/installation) (min. version 20.07.1)
 
 ii. Install [`docker`](https://docs.docker.com/engine/installation/) or [`conda`](https://conda.io/miniconda.html)
 
@@ -23,9 +23,10 @@ wget https://ftp.ncbi.nlm.nih.gov/blast/db/taxdb.tar.gz && tar -xzvf taxdb.tar.g
 ```
 
 ```bash
-#Using docker profile with container-based dependencies (recommended).
-nextflow run main.nf -profile test,docker
+#Use either conda or docker profiles for dependency packages 
+nextflow run main.nf -profile test,<conda/docker>
 ```
+*MacOS users should use only the docker profile to ensure compatibility. Using conda profile in Mac downloads a Canu v1.5 env, while v2.0 is required by NanoCLUST and any lower version would crash the pipeline. 
 
 iv. Start running your own analysis!
 
@@ -42,6 +43,7 @@ nextflow run main.nf \
 See usage and output sections in the documentation (/docs) for all of the available options when running the pipeline.
 
 ## Computing requirements note
+NanoCLUST has been tested on Ubuntu 16,18 and 20, CentOS 7 and Mac OS X 10.15 (only with docker profile).
 
 Clustering step uses up to 32-36GB RAM when working with a real dataset analysis and default parameters (umap_set_size = 100000). Setting umap_set_size to 50000, will diminish memory consumption to 10-13GB RAM. When running the pipeline, kmer_freqs or mostly read_clustering processes could be terminated with status 137 when not enough RAM.
 
@@ -53,9 +55,7 @@ Using the -with-trace option, it is possible to get an execution trace file whic
 
 ## Troubleshooting
 
-- Using conda profile, some issues can arise due to unknown problems with the read_clustering and kmer_freq conda environments. If it is the case, we recommend using the docker profile to ensure all dependencies run in the right environments and these are tested and available in the cloud (automatically downloaded when using docker profile).
-
-- In some machines, the read_clustering process exits with error status(_RuntimeError: cannot cache function '...'_). We have seen that this condition can be avoided running the pipeline with sudo privileges (even if Docker was previously available without sudo permissions). 
+- Errors may occur in read_correction step due to a small value for min_clister_size that could generate poor quality clusters for your dataset. We recommend to set this parameter around 0.1%-1% of umap_set_size as minimum value and avoid small values for min_cluster size (eg. >100).
 
 ## Credits
 
