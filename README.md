@@ -26,7 +26,7 @@ wget https://ftp.ncbi.nlm.nih.gov/blast/db/taxdb.tar.gz && tar -xzvf taxdb.tar.g
 #Use either conda or docker profiles for dependency packages 
 nextflow run main.nf -profile test,<conda/docker>
 ```
-*MacOS users should use only the docker profile to ensure compatibility. Using conda profile in Mac downloads a Canu v1.5 env, while v2.0 is required by NanoCLUST and any lower version would crash the pipeline. 
+*MacOS users should use only the docker profile to ensure compatibility. Using conda profile in Mac downloads a Canu v1.5 env, while v2.0 is required by NanoCLUST and any lower version would crash the pipeline. Increase the Docker machine memory (value is 2GB by default) and cpus in the Docker Desktop settings to higher values depending on your machine specs (minimum 8-16GB recommended for testing purposes).
 
 iv. Start running your own analysis!
 
