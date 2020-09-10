@@ -22,10 +22,12 @@ wget https://ftp.ncbi.nlm.nih.gov/blast/db/16S_ribosomal_RNA.tar.gz && tar -xzvf
 wget https://ftp.ncbi.nlm.nih.gov/blast/db/taxdb.tar.gz && tar -xzvf taxdb.tar.gz -C db/taxdb
 ```
 
+Test execution with example dataset:
 ```bash
 #Use either conda or docker profiles for dependency packages 
 nextflow run main.nf -profile test,<conda/docker>
 ```
+
 *MacOS users should use only the docker profile to ensure compatibility. Using conda profile in Mac downloads a Canu v1.5 env, while v2.0 is required by NanoCLUST and any lower version would crash the pipeline. Increase the Docker machine memory (value is 2GB by default) and cpus in the Docker Desktop settings to higher values depending on your machine specs (minimum 8-16GB recommended for testing purposes).
 
 iv. Start running your own analysis!
@@ -55,7 +57,7 @@ Using the -with-trace option, it is possible to get an execution trace file whic
 
 ## Troubleshooting
 
-- Errors may occur in read_correction step due to a small value for min_cluster_size that could generate poor quality clusters from your dataset. We recommend to set this parameter around 0.1%-1% of umap_set_size as minimum value and avoid small values for min_cluster_size (eg. >100).
+- Errors may occur in read_correction step due to a small value for min_cluster_size that could generate poor quality clusters from your dataset. We recommend to set this parameter around 0.1%-1% of umap_set_size as minimum value and avoid small values for min_cluster_size (eg. values <100).
 
 ## Credits
 
