@@ -43,7 +43,7 @@ nextflow run main.nf \
 See usage and output sections in the documentation (/docs) for all of the available options when running the pipeline.
 
 ## Computing requirements note
-NanoCLUST has been tested on Ubuntu 16,18 and 20, CentOS 7 and Mac OS X 10.15 (only with docker profile).
+NanoCLUST has been tested on Ubuntu 16,18 and 20, CentOS 7 (docker and conda profiles) and Mac OS X 10.15 (only with docker profile).
 
 Clustering step uses up to 32-36GB RAM when working with a real dataset analysis and default parameters (umap_set_size = 100000). Setting umap_set_size to 50000, will diminish memory consumption to 10-13GB RAM. When running the pipeline, kmer_freqs or mostly read_clustering processes could be terminated with status 137 when not enough RAM.
 
@@ -55,7 +55,7 @@ Using the -with-trace option, it is possible to get an execution trace file whic
 
 ## Troubleshooting
 
-- Errors may occur in read_correction step due to a small value for min_clister_size that could generate poor quality clusters for your dataset. We recommend to set this parameter around 0.1%-1% of umap_set_size as minimum value and avoid small values for min_cluster size (eg. >100).
+- Errors may occur in read_correction step due to a small value for min_cluster_size that could generate poor quality clusters from your dataset. We recommend to set this parameter around 0.1%-1% of umap_set_size as minimum value and avoid small values for min_cluster_size (eg. >100).
 
 ## Credits
 
