@@ -59,11 +59,20 @@ Using the -with-trace option, it is possible to get an execution trace file whic
 
 - Errors may occur in read_correction step due to a small value for min_cluster_size that could generate poor quality clusters from your dataset. We recommend to set this parameter around 0.1%-1% of umap_set_size as minimum value and avoid small values for min_cluster_size (eg. values <100).
 
+- Docker memory and cpu limitations should be checked in Mac OS since default memory limit (2GB) is not compatible with NanoCLUST
+
+
 ## Credits
 
 Rodríguez-Pérez H, Ciuffreda L, Flores C (2020). NanoCLUST: a species-level analysis of 16S rRNA nanopore sequencing data. Submitted.
 
 This work was supported by Instituto de Salud Carlos III [PI14/00844, PI17/00610, and FI18/00230] and co-financed by the European Regional Development Funds, “A way of making Europe” from the European Union; Ministerio de Ciencia e Innovación [RTC-2017-6471-1, AEI/FEDER, UE]; Cabildo Insular de Tenerife [CGIEU0000219140]; Fundación Canaria Instituto de Investigación Sanitaria de Canarias [PIFUN48/18]; and by the agreement with Instituto Tecnológico y de Energías Renovables (ITER) to strengthen scientific and technological education, training, research, development and innovation in Genomics, Personalized Medicine and Biotechnology [OA17/008]. 
+
+## Acknowledgements
+
+Thank you to Andreas Sjödin for his contributions and bugfixes regarding conda environments.
+
+Thank you to NanoCLUST testers Adrían Muñoz, Eva Tosco, Luis Rubio, Víctor García and Alejandro Mendoza
 
 ## Contributions and Support
 
