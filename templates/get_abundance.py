@@ -10,7 +10,7 @@ import json
 #https://unipept.ugent.be/apidocs/taxonomy
 
 def get_taxname(tax_id,tax_level):
-    tags = {"S": "species_name","G": "genus_name","F": "family_name","O":'order_name', "C": "class_name"}
+    tags = {"S": "species_name","G": "genus_name","F": "family_name","O":'order_name', "C": "class_name", "P": "phylum_name"}
     tax_level_tag = tags[tax_level]
     
     path = 'http://api.unipept.ugent.be/api/v1/taxonomy.json?input[]=' + str(int(tax_id)) + '&extra=true&names=true'
@@ -52,6 +52,7 @@ def get_abundance(names,paths,tax_level):
 paths = "$table"
 names = "$barcode"
 
+get_abundance(names,paths, "P")
 get_abundance(names,paths, "G")
 get_abundance(names,paths, "S")
 get_abundance(names,paths, "O")
