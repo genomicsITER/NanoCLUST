@@ -52,6 +52,7 @@ def get_abundance(names,paths,tax_level):
 paths = "$table"
 names = "$barcode"
 
+get_abundance(names,paths, "C")
 get_abundance(names,paths, "P")
 get_abundance(names,paths, "G")
 get_abundance(names,paths, "S")
