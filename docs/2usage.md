@@ -82,7 +82,8 @@ Use this to specify the location of your input FastQ files. For example:
 Please note the following requirements:
 
 1. The path must be enclosed in quotes
-2. The path must have at least one `*` wildcard character
+2. The path may have at least one `*` wildcard character to specify multiple samples at once.
+3. Each FastQ file must correspond to a single sample.
 
 #### `--demultiplex`
 If you have pooled data, you need to specify `--demultiplex` on the command line to enable initial demultiplex process of samples.
@@ -108,7 +109,7 @@ Number of reads that are used for the UMAP projection.
 #### `--cluster_sel_epsilon` (0.5)
 Minimum distance to separate a cluster from another. This parameter will depend on your input data and may have practical effect on the number of clusters generated. More information is available in [HDBSCAN parameter section](https://hdbscan.readthedocs.io/en/latest/parameter_selection.html).
 
-#### `--min_cluster_size` (100)
+#### `--min_cluster_size` (200)
 Minimum number of reads necessary to call a cluster. Note that sensitivity decreases when this parameter is increased.
 
 ## Polishing parameters
