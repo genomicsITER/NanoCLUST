@@ -59,6 +59,8 @@ if (params.help) {
  * SET UP CONFIGURATION VARIABLES
  */
 
+def racon_warnings = []
+
 if(params.demultiplex) {
     Channel.fromPath(params.reads).set { multiplexed_reads }
 }
@@ -261,7 +263,6 @@ if(params.multiqc){
  }
 
  process read_clustering {
-     memory { 7.GB * task.attempt }
      time { 1.hour * task.attempt }
      errorStrategy { task.exitStatus in 137..140 ? 'retry' : 'terminate' }
      maxRetries 3
@@ -313,14 +314,14 @@ if(params.multiqc){
      tuple val(barcode), file(cluster_log), file(reads) from cluster_reads
 
      output:
-      tuple val(barcode), val(cluster_id), file('*_racon_.log'), file('corrected_reads*.fasta') into corrected_reads
+      tuple val(barcode), val(cluster_id), file('*_racon_.log'), file('corrected_reads.correctedReads.fasta') into corrected_reads
 
      script:
      count=params.polishing_reads
      cluster_id=cluster_log.baseName
      """
      head -n\$(( $count*4 )) $reads > subset.fastq
-     canu -correct -p corrected_reads -nanopore-raw subset.fastq genomeSize=1.5k stopOnLowCoverage=1 minInputCoverage=2
+     canu -correct -p corrected_reads -nanopore-raw subset.fastq genomeSize=1.5k stopOnLowCoverage=1 minInputCoverage=2 minReadLength=500 minOverlapLength=200
      gunzip corrected_reads.correctedReads.fasta.gz
      READ_COUNT=\$(( \$(awk '{print \$1/2}' <(wc -l corrected_reads.correctedReads.fasta)) ))
      cat $cluster_log > ${cluster_id}_racon.log
@@ -363,12 +364,19 @@ if(params.multiqc){
      tuple val(barcode), val(cluster_id), file(cluster_log), file(draft_read), file(corrected_reads) from draft
 
      output:
-     tuple val(barcode), val(cluster_id), file(cluster_log), file('racon_consensus.fasta'), file(corrected_reads) into racon_output
+     tuple val(barcode), val(cluster_id), file(cluster_log), file('racon_consensus.fasta'), file(corrected_reads), env(success) into racon_output
 
      script:
      """
+     success=1
      minimap2 -ax map-ont --no-long-join -r100 -a $draft_read $corrected_reads -o aligned.sam
-     racon --quality-threshold=9 -w 250 $corrected_reads aligned.sam $draft_read > racon_consensus.fasta
+     if racon --quality-threshold=9 -w 250 $corrected_reads aligned.sam $draft_read > racon_consensus.fasta ; then
+        success=1
+     else
+        success=0
+        cat $draft_read > racon_consensus.fasta
+     fi
+
      """
  }
 
@@ -381,14 +389,22 @@ if(params.multiqc){
      publishDir "${params.outdir}/${barcode}/cluster${cluster_id}", mode: 'copy', pattern: 'consensus_medaka.fasta/consensus.fasta' 
 
      input:
-     tuple val(barcode), val(cluster_id), file(cluster_log), file(draft), file(corrected_reads) from racon_output
+     tuple val(barcode), val(cluster_id), file(cluster_log), file(draft), file(corrected_reads), val(success) from racon_output
 
      output:
      tuple val(barcode), val(cluster_id), file(cluster_log), file('consensus_medaka.fasta/consensus.fasta') into final_consensus
 
      script:
+     if(success == "0"){
+        log.warn """Sample $barcode : Racon correction for cluster $cluster_id failed due to not enough overlaps. Taking draft read as consensus"""
+        racon_warnings.add("""Sample $barcode : Racon correction for cluster $cluster_id failed due to not enough overlaps. Taking draft read as consensus""")
+     }
      """
-     medaka_consensus -i $corrected_reads -d $draft -o consensus_medaka.fasta -t 4 -m r941_min_high_g303
+     if medaka_consensus -i $corrected_reads -d $draft -o consensus_medaka.fasta -t 4 -m r941_min_high_g303 ; then
+        echo "Command succeeded"
+     else
+        cat $draft > consensus_medaka.fasta
+     fi
      """
 
  }
@@ -610,6 +626,9 @@ workflow.onComplete {
 
     if (workflow.success) {
         log.info "${c_purple}[nf-core/nanoclust]${c_green} Pipeline completed successfully${c_reset}"
+        if(!racon_warnings.isEmpty()){
+            racon_warnings.each{log.warn "$it"}
+        }
     } else {
         checkHostname()
         log.info "${c_purple}[nf-core/nanoclust]${c_red} Pipeline completed with errors${c_reset}"
