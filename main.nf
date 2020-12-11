@@ -434,7 +434,7 @@ if(params.multiqc){
 
      if(!params.db)
         """
-        blastn -query $consensus -db nr -remote -entrez_query "Bacteria [Organism]" -task blastn -dust no -outfmt "10 staxids sscinames evalue length score pident" -evalue 11 -max_hsps 50 -max_target_seqs 5 > consensus_classification.csv
+        blastn -query $consensus -db nr -remote -entrez_query "Bacteria [Organism]" -task blastn -dust no -outfmt "10 staxid ssciname evalue length score pident" -evalue 11 -max_hsps 50 -max_target_seqs 5 > consensus_classification.csv
         cat $cluster_log > ${cluster_id}_blast.log
         echo -n ";" >> ${cluster_id}_blast.log
         BLAST_OUT=\$(cut -d";" -f1,2,4,5 consensus_classification.csv | head -n1)
@@ -445,7 +445,7 @@ if(params.multiqc){
         """
         export BLASTDB=
         export BLASTDB=\$BLASTDB:$taxdb
-        blastn -query $consensus -db $db -task blastn -dust no -outfmt "10 sscinames staxids evalue length pident" -evalue 11 -max_hsps 50 -max_target_seqs 5 | sed 's/,/;/g' > consensus_classification.csv
+        blastn -query $consensus -db $db -task blastn -dust no -outfmt "10 ssciname staxid evalue length pident" -evalue 11 -max_hsps 50 -max_target_seqs 5 | sed 's/,/;/g' > consensus_classification.csv
         #DECIDE FINAL CLASSIFFICATION
         cat $cluster_log > ${cluster_id}_blast.log
         echo -n ";" >> ${cluster_id}_blast.log
