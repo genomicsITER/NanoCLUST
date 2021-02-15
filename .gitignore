@@ -1,7 +1,13 @@
 .nextflow*
 work/
 data/
+db/
 results*/
 .DS_Store
 tests/test_data
 *.pyc
+*.log
+*.tmp
+*.tar.gz
+*.fasta
+*.fastq

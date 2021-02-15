@@ -30,6 +30,8 @@ def helpMessage() {
       --min_cluster_size            Minimum number of reads to call a independent cluster (100)
       --min_read_length             Minimum number of base pair in sequence reads (1400)
       --max_read_length             Maximum number of base pair in sequence reads (1700)
+      --avg_amplicon_size               Average size for the sequenced amplicon (ie: 1.5k for 16S/1.8k for 18S)
+
 
     Other options:
       --demultiplex                 Set this parameter if you file is a pooled sample
@@ -321,7 +323,7 @@ if(params.multiqc){
      cluster_id=cluster_log.baseName
      """
      head -n\$(( $count*4 )) $reads > subset.fastq
-     canu -correct -p corrected_reads -nanopore-raw subset.fastq genomeSize=1.5k stopOnLowCoverage=1 minInputCoverage=2 minReadLength=500 minOverlapLength=200
+     canu -correct -p corrected_reads -nanopore-raw subset.fastq genomeSize=${params.avg_amplicon_size} stopOnLowCoverage=1 minInputCoverage=2 minReadLength=500 minOverlapLength=200
      gunzip corrected_reads.correctedReads.fasta.gz
      READ_COUNT=\$(( \$(awk '{print \$1/2}' <(wc -l corrected_reads.correctedReads.fasta)) ))
      cat $cluster_log > ${cluster_id}_racon.log

@@ -12,9 +12,19 @@ import json
 def get_taxname(tax_id,tax_level):
     tags = {"S": "species_name","G": "genus_name","F": "family_name","O":'order_name', "C": "class_name"}
     tax_level_tag = tags[tax_level]
+    #Avoids pipeline crash due to "nan" classification output. Thanks to Qi-Maria from Github
+    if str(tax_id) == "nan":
+        tax_id = 1
     
     path = 'http://api.unipept.ugent.be/api/v1/taxonomy.json?input[]=' + str(int(tax_id)) + '&extra=true&names=true'
     complete_tax = requests.get(path).text
+
+    #Checks for API correct response (field containing the tax name). Thanks to devinbrown from Github
+    try:
+        name = json.loads(complete_tax)[0][tax_level_tag]
+    except:
+        name = str(int(tax_id))
+
     return json.loads(complete_tax)[0][tax_level_tag]
 
 def get_abundance_values(names,paths):
