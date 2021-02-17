@@ -10,7 +10,7 @@
 */
 log.info nfcoreHeader()
 def helpMessage() {
-    
+
     log.info"""
 
     Usage:
@@ -199,7 +199,7 @@ process QC {
     file(reads) from reads
 
     output:
-    tuple env(barcode), file("*qced_reads_set.fastq") into reads_fastqc, qc_results 
+    tuple env(barcode), file("*qced_reads_set.fastq") into reads_fastqc, qc_results
 
     script:
     """
@@ -232,14 +232,14 @@ if(params.multiqc){
 
         input:
         file ('fastqc/*') from fastqc_results.collect().ifEmpty([])
-        
+
         output:
         file "*multiqc_report.html"
         file "*_data"
 
         script:
         """
-        multiqc . 
+        multiqc .
         """
     }
 }
@@ -257,7 +257,7 @@ if(params.multiqc){
      file "freqs.txt" into freqs
      tuple val(barcode), file(qced_reads) into freqs_qc_results
 
-     script:   
+     script:
      """
      kmer_freq.py -r $qced_reads > freqs.txt
      """
@@ -388,7 +388,7 @@ if(params.multiqc){
      errorStrategy { task.exitStatus in 137..140 ? 'retry' : 'terminate' }
      maxRetries 3
 
-     publishDir "${params.outdir}/${barcode}/cluster${cluster_id}", mode: 'copy', pattern: 'consensus_medaka.fasta/consensus.fasta' 
+     publishDir "${params.outdir}/${barcode}/cluster${cluster_id}", mode: 'copy', pattern: 'consensus_medaka.fasta/consensus.fasta'
 
      input:
      tuple val(barcode), val(cluster_id), file(cluster_log), file(draft), file(corrected_reads), val(success) from racon_output
@@ -429,7 +429,8 @@ if(params.multiqc){
          blast_dir = "$baseDir/"
      }
      else {
-         blast_dir = "/tmp/"
+       // blast_dir = "/tmp/"
+       blast_dir = "$baseDir/" // NEEDED to work on the SAGA hpc cluster
      }
      db=blast_dir + params.db
      taxdb=blast_dir + params.tax
@@ -473,7 +474,7 @@ if(params.multiqc){
         cat \$i >> ${barcode}.nanoclust_out.txt
      done
      """
-     
+
  }
 
 process get_abundances {
@@ -652,7 +653,7 @@ def nfcoreHeader(){
     c_white = params.monochrome_logs ? '' : "\033[0;37m";
     c_red = params.monochrome_logs ? '' : "\033[0;31m";
 
-    return """   
+    return """
     -${c_dim}--------------------------------------------------${c_reset}-
     ${c_green}      _   __                 ${c_red}    ________    __  _____________${c_reset}
     ${c_green}     / | / /___ _____  ____  ${c_red}   / ____/ /   / / / / ___/_  __/${c_reset}
