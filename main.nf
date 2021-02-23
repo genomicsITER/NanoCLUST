@@ -480,6 +480,8 @@ if(params.multiqc){
 process get_abundances {
     publishDir "${params.outdir}/${barcode}", mode: 'copy'
 
+    label 'local'  // needed when running slurm, to prevent task from running as a slurm job
+
     input:
     tuple val(barcode), file(table) from output_table_ch
 
