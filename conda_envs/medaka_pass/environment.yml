@@ -1,0 +1,7 @@
+name: medaka_pass
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+  - medaka =1.0.3

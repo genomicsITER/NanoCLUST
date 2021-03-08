@@ -28,7 +28,7 @@ for k, v in regexes.items():
         results[k] = False
 
 # Remove software set to false in results
-for k in list(results):
+for k in results:
     if not results[k]:
         del(results[k])
 

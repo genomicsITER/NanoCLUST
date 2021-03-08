@@ -1,0 +1,7 @@
+name: consensus_classification
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+  - blast =2.10.1

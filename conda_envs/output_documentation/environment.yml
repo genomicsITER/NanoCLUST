@@ -1,0 +1,10 @@
+name: output-documentation
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+  - python =3.7
+  - markdown =3.2.2
+  - pymdown-extensions =8.0
+  - pygments =2.6.1
