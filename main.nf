@@ -411,6 +411,17 @@ if(params.multiqc){
 
  }
 
+ def resolve_blast_db_path (path) {
+     if(path ==~ /^\/.*/)
+         path
+     else if(path ==~ /^\.\/.*/)
+         "$projectDir/" + path
+     else if(workflow.profile == 'conda' || workflow.profile == 'test,conda')
+         "$baseDir/" + path
+     else
+         "/tmp/" + path
+ }
+
  process consensus_classification {
      publishDir "${params.outdir}/${barcode}/cluster${cluster_id}", mode: 'copy', pattern: 'consensus_classification.csv'
      time '3m'
@@ -425,14 +436,8 @@ if(params.multiqc){
      tuple val(barcode), file('*_blast.log') into classifications_ch
 
      script:
-     if(workflow.profile == 'conda' || workflow.profile == 'test,conda'){
-         blast_dir = "$baseDir/"
-     }
-     else {
-         blast_dir = "/tmp/"
-     }
-     db=blast_dir + params.db
-     taxdb=blast_dir + params.tax
+     db = resolve_blast_db_path(params.db)
+     taxdb = resolve_blast_db_path(params.tax)
 
      if(!params.db)
         """
