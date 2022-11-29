@@ -65,4 +65,4 @@ This work was supported by Instituto de Salud Carlos III [PI14/00844, PI17/00610
 
 ## Contributions and Support
 
-If you would like to contribute to this pipeline, please see the contributing guidelines
+If you would like to contribute to this pipeline, please see the contributing guidelines.
