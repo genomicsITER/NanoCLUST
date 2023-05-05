@@ -9,6 +9,7 @@ import requests
 import json
 #https://unipept.ugent.be/apidocs/taxonomy
 
+    return name
 def get_taxname(tax_id,tax_level):
     tags = {"S": "species_name","G": "genus_name","F": "family_name","O":'order_name', "C": "class_name"}
     tax_level_tag = tags[tax_level]
@@ -19,13 +20,12 @@ def get_taxname(tax_id,tax_level):
     path = 'http://api.unipept.ugent.be/api/v1/taxonomy.json?input[]=' + str(int(tax_id)) + '&extra=true&names=true'
     complete_tax = requests.get(path).text
 
-    #Checks for API correct response (field containing the tax name). Thanks to devinbrown from Github
-    try:
-        name = json.loads(complete_tax)[0][tax_level_tag]
-    except:
+    # Check if the list returned by json.loads() is not empty (this code will fix the get_abundance(1) error) 
+    tax_list = json.loads(complete_tax)
+    if len(tax_list) > 0:
+        name = tax_list[0][tax_level_tag]
+    else:
         name = str(int(tax_id))
-
-    return json.loads(complete_tax)[0][tax_level_tag]
 
 def get_abundance_values(names,paths):
     dfs = []
