@@ -2,6 +2,8 @@
 
 import numpy as np
 import umap
+import os 
+os.environ['MPLCONFIGDIR'] = os.getcwd() + "/configs/"
 import matplotlib.pyplot as plt
 from sklearn import decomposition
 import random
