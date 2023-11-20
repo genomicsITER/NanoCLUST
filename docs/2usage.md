@@ -15,9 +15,9 @@ NXF_OPTS='-Xms1g -Xmx4g'
 The typical command for running the pipeline is as follows:
 
 ```bash
-nextflow run main.nf --reads 'data/mock_sample.fastq' --db 'db/blastdb' --tax 'db/taxdb' -profile <conda,docker>
+nextflow run main.nf --reads 'data/mock_sample.fastq' --db 'db/blastdb' --tax 'db/taxdb' -profile <conda,docker,singularity>
 ```
-This will launch the pipeline with the `conda` or `docker` configuration profiles. See below for more information about profiles.
+This will launch the pipeline with the `conda`, `docker`, or `singularity` configuration profiles. See below for more information about profiles.
 
 *Database and taxdb should be downloaded in the NanoCLUST dir.
 
