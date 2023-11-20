@@ -10,7 +10,7 @@ The pipeline is built using [Nextflow](https://www.nextflow.io), a workflow tool
 
 i. Install [`nextflow`](https://nf-co.re/usage/installation)
 
-ii. Install [`docker`](https://docs.docker.com/engine/installation/) or [`conda`](https://conda.io/miniconda.html)
+ii. Install [`docker`](https://docs.docker.com/engine/installation/), [`singularity`/`apptainer`](https://apptainer.org/docs/user/latest/quick_start.html#quick-installation), or [`conda`](https://conda.io/miniconda.html)
 
 iii. Clone the NanoCLUST repository and test the pipeline on a minimal dataset with a single command and docker/conda profiles.
 
