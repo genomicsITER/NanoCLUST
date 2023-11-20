@@ -22,7 +22,7 @@ def helpMessage() {
     Mandatory arguments:
       --reads                       Path to input data (must be surrounded with quotes)
       -profile                      Configuration profile to use. Can use multiple (comma separated)
-                                    Available: conda, docker, singularity, awsbatch, test and more.
+                                    Available: conda, docker, singularity, test, and more.
 
     UMAP and HDBSCAN clustering parameters:
       --umap_set_size               Number of reads used to perform the UMAP+HDBSCAN clustering (100000)
