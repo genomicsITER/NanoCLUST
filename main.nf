@@ -164,6 +164,7 @@ process get_software_versions {
 if(params.demultiplex) {
     process demultiplex {
      publishDir "${params.outdir}/demultiplexed_samples", mode: 'copy'
+     container 'docker://hecrp/nanoclust-demultiplex'
 
      input:
      file(reads) from multiplexed_reads
@@ -195,6 +196,8 @@ if(params.demultiplex_porechop){
 }
 
 process QC {
+    container 'docker://hecrp/nanoclust-qc' 
+
     input:
     file(reads) from reads
 
@@ -212,6 +215,7 @@ process QC {
 
 
 process fastqc {
+    container 'docker://hecrp/nanoclust-fastqc'
     publishDir "${params.outdir}/fastqc_rawdata", mode: 'copy',
     saveAs: {filename -> filename.indexOf(".zip") > 0 ? "zips/$filename" : "$filename"}
 
@@ -227,6 +231,7 @@ process fastqc {
     """
 }
 if(params.multiqc){
+    container 'docker://hecrp/nanoclust-fastqc'
     process multiqc {
         publishDir "${params.outdir}/MultiQC", mode: 'copy'
 
@@ -245,6 +250,7 @@ if(params.multiqc){
 }
 
  process kmer_freqs {
+     container 'docker://hecrp/nanoclust-kmer_freqs' 
      memory { 7.GB * task.attempt }
      time { 1.hour * task.attempt }
      errorStrategy { task.exitStatus in 137..140 ? 'retry' : 'terminate' }
@@ -265,6 +271,7 @@ if(params.multiqc){
  }
 
  process read_clustering {
+     container 'docker://hecrp/nanoclust-read_clustering' 
      time { 1.hour * task.attempt }
      errorStrategy { task.exitStatus in 137..140 ? 'retry' : 'terminate' }
      maxRetries 3
@@ -284,6 +291,7 @@ if(params.multiqc){
  }
 
  process split_by_cluster {
+     container 'docker://hecrp/nanoclust-split_by_cluster' 
      input:
      tuple val(barcode), file(clusters), file(qced_reads) from clustering_out
 
@@ -307,6 +315,7 @@ if(params.multiqc){
  }
 
  process read_correction {
+     container 'docker://hecrp/nanoclust-read_correction' 
      memory { 7.GB * task.attempt }
      time { 1.hour * task.attempt }
      errorStrategy { task.exitStatus in 137..140 ? 'retry' : 'terminate' }
@@ -332,6 +341,7 @@ if(params.multiqc){
  }
 
  process draft_selection {
+     container 'docker://hecrp/nanoclust-draft_selection' 
      publishDir "${params.outdir}/${barcode}/cluster${cluster_id}", mode: 'copy', pattern: 'draft_read.fasta'
      errorStrategy 'retry'
 
@@ -357,6 +367,7 @@ if(params.multiqc){
  }
 
  process racon_pass {
+     container 'docker://hecrp/nanoclust-racon_pass' 
      memory { 7.GB * task.attempt }
      time { 1.hour * task.attempt }
      errorStrategy { task.exitStatus in 137..140 ? 'retry' : 'terminate' }
@@ -383,6 +394,7 @@ if(params.multiqc){
  }
 
  process medaka_pass {
+     container 'docker://hecrp/nanoclust-medaka_pass' 
      memory { 7.GB * task.attempt }
      time { 1.hour * task.attempt }
      errorStrategy { task.exitStatus in 137..140 ? 'retry' : 'terminate' }
@@ -423,6 +435,7 @@ if(params.multiqc){
  }
 
  process consensus_classification {
+     conda "$baseDir/conda_envs/consensus_classification/environment.yml"
      publishDir "${params.outdir}/${barcode}/cluster${cluster_id}", mode: 'copy', pattern: 'consensus_classification.csv'
      time '3m'
      errorStrategy { sleep(1000); return 'retry' }
@@ -482,6 +495,7 @@ if(params.multiqc){
  }
 
 process get_abundances {
+    container 'docker://hecrp/nanoclust-plot_abundances' 
     publishDir "${params.outdir}/${barcode}", mode: 'copy'
 
     input:
@@ -497,6 +511,7 @@ process get_abundances {
 
 
 process plot_abundances {
+    container 'docker://hecrp/nanoclust-plot_abundances' 
     publishDir "${params.outdir}/${barcode}", mode: 'copy'
 
     input:
@@ -510,6 +525,7 @@ process plot_abundances {
 }
 
 process output_documentation {
+    container 'docker://hecrp/nanoclust-output_documentation' 
     publishDir "${params.outdir}/pipeline_info", mode: 'copy'
 
     input:
