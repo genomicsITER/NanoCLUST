@@ -195,7 +195,6 @@ if(params.demultiplex_porechop){
 }
 
 process QC {
-
     input:
     file(reads) from reads
 
